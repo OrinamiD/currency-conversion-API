@@ -3,6 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import { connectDb, port } from "./src/config/db.config.js";
+import router from "./src/currency-converion/conversion/conversion.routes.js";
 // import cookieParser = require("cookie-parser");
 const app = express();
 app.use(helmet());
@@ -46,8 +47,7 @@ process.on("uncaughtException", (err) => {
 process.on("unhandledRejection", (reason) => {
     console.error("Unhandled Rejection:", reason);
 });
-// app.use("/v1/api", router);
-// final error handler (for other errors)
+app.use("/v1/api", router);
 app.use((err, req, res, next) => {
     console.error("Unhandled error:", err.message);
     res.status(500).json({ success: false, message: "Internal Server Error" });

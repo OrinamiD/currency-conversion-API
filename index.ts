@@ -6,6 +6,7 @@ import helmet from "helmet";
 
 import rateLimit from "express-rate-limit";
 import { connectDb, port } from "./src/config/db.config.js";
+import router from "./src/currency-converion/conversion/conversion.routes.js";
 
 // import cookieParser = require("cookie-parser");
 
@@ -67,9 +68,8 @@ process.on("unhandledRejection", (reason) => {
   console.error("Unhandled Rejection:", reason);
 });
 
-// app.use("/v1/api", router);
+app.use("/v1/api", router);
 
-// final error handler (for other errors)
 app.use(
   (
     err: any,
