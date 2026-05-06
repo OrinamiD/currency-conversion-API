@@ -219,6 +219,4 @@ Use Postman or Thunder Client:
 
 ---
 
-## 👨‍💻 Author
 
-Developed by Cornelius Dongo
