@@ -2,13 +2,16 @@
 
 import express, { Router } from "express";
 
-import { convert } from "./conversion.controller.js";
 import { conversionSchema } from "./conversion.schema.js";
 import { validate } from "../../middleware/validate.js";
+import { conversionController } from "./conversion.controller.js";
 
 const router: Router = express.Router();
 
-router.post("/convert", validate(conversionSchema), convert);
-console.log("Conversion route hit");
+router.post(
+  "/convert",
+  validate(conversionSchema),
+  conversionController.convert,
+);
 
 export default router;

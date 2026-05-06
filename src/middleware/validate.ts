@@ -1,6 +1,4 @@
-// middlewares/validate.ts
-
-import type { ZodSchema } from "zod";
+import { ZodError, type ZodSchema } from "zod";
 import type { Request, Response, NextFunction } from "express";
 
 export const validate =
@@ -8,9 +6,18 @@ export const validate =
     try {
       req.body = schema.parse(req.body);
       next();
-    } catch (error: any) {
-      return res.status(400).json({
-        error: error.errors.map((e: any) => e.message),
+    } catch (error: unknown) {
+      if (error instanceof ZodError) {
+        return res.status(400).json({
+          errors: error.issues.map((e) => ({
+            field: e.path.join("."),
+            message: e.message,
+          })),
+        });
+      }
+
+      return res.status(500).json({
+        error: "Internal validation error",
       });
     }
   };
