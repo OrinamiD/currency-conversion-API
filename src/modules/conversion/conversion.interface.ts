@@ -1,5 +1,3 @@
-// interfaces/conversion.interface.ts
-
 export interface ConversionDTO {
   fromCurrency: string;
   toCurrency: string;

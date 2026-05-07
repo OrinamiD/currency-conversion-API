@@ -1,7 +1,8 @@
-
-
 import { getExchangeRates } from "../../utils/apiClient.js";
-import { conversionRepository, type ConversionRepository } from "./conversion.repository.js";
+import {
+  conversionRepository,
+  type ConversionRepository,
+} from "./conversion.repository.js";
 
 export class ConversionService {
   constructor(private conversionRepository: ConversionRepository) {}
@@ -18,7 +19,13 @@ export class ConversionService {
     const from = fromCurrency.toUpperCase();
     const to = toCurrency.toUpperCase();
 
-    const rates = await getExchangeRates();
+    let rates;
+
+    try {
+      rates = await getExchangeRates();
+    } catch (error) {
+      throw new Error("Failed to fetch exchange rates");
+    }
 
     //  Extract valid currencies
     const validCurrencies = rates.map((r: any) => r.currency);
